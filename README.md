@@ -1,6 +1,12 @@
 # architect-project
 
-최초 수행 테스트
 
-rabbit mq 소비자 node
-rabbit mq 생산자 spring 
+docker-compose -f docker-compose-producer.yml up
+
+docker-compose -f docker-compose-producer-api.yml up
+
+
+docker-compose up --scale redis-master=3 -d
+
+
+docker-compose -f docker-compose-producer-api-repl.yml up --scale producer=5

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  producer:    
+    image: architect-team-project-producer-api:0.0.2
+    restart: "no"
+    ports: 
+      - "8501-8505:8501"
+    extra_hosts: 
+      - localhost:host-gateway    
+ 
+

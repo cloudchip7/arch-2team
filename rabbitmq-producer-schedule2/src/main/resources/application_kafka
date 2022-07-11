@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: producerService
+  cloud:
+    stream:
+      bindings:
+        "iot.event":
+          destination: iot.event
+          content-type: application/json
+    kafka:
+      binder:
+        zkNodes: localhost
+        brokers: localhost
+    default-binder: kafka

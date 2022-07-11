@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: producerService
+  cloud:
+    stream:
+      bindings:
+        "iot.event":
+          destination:  iot.event
+          content-type: application/json
+          binder: rabbit-event
+      binders:
+        rabbit-event:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: 127.0.0.1
+                username: guest
+                password: guest
+      rabbit:
+        bindings:
+          "iot.event":
+            producer:
+              exchangeType: fanout

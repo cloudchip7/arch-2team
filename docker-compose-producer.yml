@@ -1,0 +1,32 @@
+version: '3'
+services:
+  producer1:    
+    image: architect-team-project-producer:0.0.2
+    hostname: producer1
+    restart: "no"
+    extra_hosts: 
+      - localhost:host-gateway
+  producer2:    
+    image: architect-team-project-producer:0.0.2
+    hostname: producer2
+    restart: "no"
+    extra_hosts: 
+      - localhost:host-gateway
+  producer3:    
+    image: architect-team-project-producer:0.0.2
+    hostname: producer3
+    restart: "no"
+    extra_hosts: 
+      - localhost:host-gateway
+  producer4:    
+    image: architect-team-project-producer:0.0.2
+    hostname: producer4
+    restart: "no"
+    extra_hosts: 
+      - localhost:host-gateway
+  producer5:    
+    image: architect-team-project-producer:0.0.2
+    hostname: producer5
+    restart: "no"
+    extra_hosts: 
+      - localhost:host-gateway
