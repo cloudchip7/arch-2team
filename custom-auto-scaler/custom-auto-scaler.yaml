@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: custom-auto-scaler
-          image: gcr.io/architect-certification-289902/23/custom-auto-scaler:latest
+          image: gcr.io/architect-certification-289902/23/custom-auto-scaler:v6
           ports:
           - containerPort: 8080
           resources:

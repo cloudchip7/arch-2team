@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2beta10
+kind: Config
+build:
+  artifacts:
+    # image : 아티펙트를 어느곳에 올릴지 적어준다. Minikube는 생략해도되지만 일반 Kube는 필수. 
+    # context : 어느폴더를 빌드할 것인지를 적어준다. 
+    - image: gcr.io/architect-certification-289902/23/custom-auto-scaler
+      context: custom-auto-scaler
+    - image: gcr.io/architect-certification-289902/23/rabbitmq-consumer
+      context: rabbitmq-consumer
+      jib:
+        type: gradle
+
+deploy:
+  kubectl:
+    manifests:
+      - k8s/**.yaml
