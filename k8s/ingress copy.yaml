@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: eshop-ingress
+  name: team2-ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
@@ -11,7 +11,7 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: eshop-frontend
+          serviceName: custom-auto-scaler
           servicePort: 8080
       - path: /api
         backend:

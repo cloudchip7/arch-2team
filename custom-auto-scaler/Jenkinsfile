@@ -1,0 +1,54 @@
+pipeline {
+  environment {
+    PROJECT_ID = 'architect-certification-289902'
+    MEMBER_ID = '23'
+    VUE_APP_BASE_URL = "/api"
+  }
+  agent {
+    kubernetes {
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: docker
+spec:
+  containers:
+  - name: dind
+    image: docker:18.05-dind
+    securityContext:
+      privileged: true
+    volumeMounts:
+      - name: dind-storage
+        mountPath: /var/lib/docker
+  volumes:
+    - name: dind-storage
+      emptyDir: {}
+"""      
+    }
+  }
+  stages {
+    stage('build docker image') {
+      steps {
+        container('dind') {
+          dir('eshop-frontend') {
+            sh 'docker image build -t gcr.io/$PROJECT_ID/$MEMBER_ID/eshop-frontend:$BUILD_ID --build-arg VUE_APP_BASE_URL=$VUE_APP_BASE_URL .'
+          }
+        }
+      }
+    }
+
+    stage('push docker image') {
+      steps {
+        container('dind') {
+          dir('eshop-frontend') {
+            withCredentials([file(credentialsId: 'gcr-credential', variable: 'GCR_CREDENTIAL_JSON')]) {
+              sh 'docker login gcr.io -u _json_key -p "$( cat $GCR_CREDENTIAL_JSON )"'
+              sh 'docker image push gcr.io/$PROJECT_ID/$MEMBER_ID/eshop-frontend:$BUILD_ID'
+            }
+          }
+        }
+      }
+    }
+  }
+}
