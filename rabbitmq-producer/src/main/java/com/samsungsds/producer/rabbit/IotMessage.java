@@ -15,8 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
      private IotMessageDeliver iotEventDeliver;
 
      public void pubMessage(int num) {
-        Message model = new Message();
-        model.setDate();
-        iotEventDeliver.output().send(MessageBuilder.withPayload(model).build());
+         Message model = new Message();
+         
+         System.out.println("Generate Data " + num);
+         for(int i = 0; i< num; i++)
+         {
+            model.setDate();
+            iotEventDeliver.output().send(MessageBuilder.withPayload(model).build());
+         }
      }
  }

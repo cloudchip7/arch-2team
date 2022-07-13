@@ -1,0 +1,22 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: consumerService
+  cloud:
+    stream:
+      bindings:
+        "input":
+          destination: like.event.exchange
+          contentType: application/json
+          binder: rabbit-like
+      binders:
+        rabbit-like:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: 127.0.0.1
+                username: guest
+                password: guest

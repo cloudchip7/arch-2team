@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-producer
+spec:
+  selector:
+    matchLabels:
+      app: rabbitmq-producer
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-producer
+    spec:
+      containers:
+        - name: rabbitmq-producer
+          image: gcr.io/architect-certification-289902/23/rabbitmq-producer:latest
+          ports:
+          - containerPort: 8100
+          env:
+            - name: SPRING_RABBITMQ_HOST
+              value: rabbitmq
+            - name: GOOGLE_CLOUD_PROJECT
+              value: architect-certification-289902
+          resources:
+            requests:
+              cpu: 500m
+              memory: 384Mi
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-producer
+spec:
+  type: ClusterIP
+  selector:
+    app: rabbitmq-producer
+  ports:
+  - port: 8100

@@ -11,7 +11,7 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: custom-auto-scaler
+          serviceName: eshop-frontend
           servicePort: 8080
       - path: /api
         backend:

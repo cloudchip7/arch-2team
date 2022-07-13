@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8501
 
 spring:
   application:
@@ -20,7 +20,7 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: 127.0.0.1
+                host: localhost
                 username: guest
                 password: guest
         kafka-event:

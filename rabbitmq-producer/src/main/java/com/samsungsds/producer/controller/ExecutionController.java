@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class ExecutionController {
 
     private final IotService iotService;
-    private int sendNum = 1;
+    private int sendNum = 200;
 
     public ExecutionController(final IotService iotService) {
          this.iotService = iotService;
@@ -25,16 +25,11 @@ public class ExecutionController {
         return  ResponseEntity.ok("OK");
     }
 
-    @GetMapping(value = "/send")
-    public @ResponseBody ResponseEntity produceRabbitAPI() {
+    @Async
+    @Scheduled(fixedRate = 1000)
+    public void scheduleFixedDelayTask2() throws InterruptedException {
         iotService.pubMessage(sendNum);
-        return ResponseEntity.ok("OK");
     }
-    // @Async
-    // @Scheduled(fixedRate = 5)
-    // public void scheduleFixedDelayTask2() throws InterruptedException {
-    //     iotService.pubMessage(sendNum);
-    // }
 
     // @Async
     // @Scheduled(fixedRate = 100, initialDelay = 50)

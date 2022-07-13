@@ -1,37 +1,34 @@
 var request = require('request');
-var count_url2 = "http://guest:guest@127.0.0.1:15672/api/queues/%2F/iotQueue"
-var count_url = "http://guest:guest@127.0.0.1:15672/api/vhosts/" 
+var count_url2 = "http://guest:guest@127.0.0.1:15672/api/queues/%2F/iot.event"
+var count_url3 = "http://guest:guest@127.0.0.1:15672/api/queues"
+var count_url_local = "http://guest:guest@127.0.0.1:15672/api/overview"
+
+var count_url = "http://guest:guest@rabbitmq:15672/api/overview"
 
 // /api/queues/vhost/name/get
 
-var mincount = 0;
+function checkRabbit() { 
+    return new Promise(function (resolve, reject) { 
+        request({
+            url : count_url
+        }, function(error, response, body) {
+            if (error) {
+                reject("failed");
+            }
+            else
+            {
+                var message = JSON.parse(body);
+                resolve(message.queue_totals.messages);
+            }
+        });
+    });
+}
 
-request({
-    url : count_url2
-}, function(error, response, body) {
-    console.log("Called RabbitMQ API");
-    if (error) {
-        console.error("Unable to fetch Queued Msgs Count" + error);
-        return;
-    }
-    else
-    {
-        var message = JSON.parse(body);
-        console.log(message);
+async function intervalFunc() {
+    const data = await checkRabbit();
+    console.log(data);
+  }
+  
+setInterval(intervalFunc, 1500);
 
-        // if (message.hasOwnProperty("messages_ready")) {
-        //     // this DOES NOT COUNT UnAck msgs
-        //     var msg_ready = JSON.stringify(message.messages_ready);
-        //     console.log("message.messages_ready=" + msg_ready);
-        //     if (msg_ready == mincount) {
-        //         console.log("mincount Reached ..Requesting Producer");
-        //         ///Code to Produce msgs  ..
-        //     }
-        // }
-        // if (message.hasOwnProperty("messages")) {
-        //     // _messages_ total messages i.e including unAck
-        //     var msg = JSON.stringify(message.messages);
-        //     console.log("message.messages=" + msg);
-        // }
-    }
-});
+

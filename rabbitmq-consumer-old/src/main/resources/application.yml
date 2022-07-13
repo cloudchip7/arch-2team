@@ -1,18 +1,28 @@
 server:
-  port: 8081
+  port: 8090
+
+logging:
+  config: classpath:log4j2.yml
 
 spring:
   application:
-    name: producerService
+    name: consumerService
   cloud:
     stream:
       bindings:
-        "iot.event":
+        input1:
           destination: iot.event
           content-type: application/json
-           # rabbit-event or kafka-event
+          # rabbit-event or kafka-event
           binder: rabbit-event
-      # rabbit-event or kafka-event    
+          # group: iot
+        # input2:
+        #   destination: iot.event
+        #   content-type: application/json
+        #   # rabbit-event or kafka-event
+        #   binder: rabbit-event
+          # group: iot
+      # rabbit-event or kafka-event
       default-binder: rabbit-event
       binders:
         rabbit-event:
@@ -20,7 +30,7 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: 127.0.0.1
+                host: localhost
                 username: guest
                 password: guest
         kafka-event:
@@ -33,7 +43,8 @@ spring:
                     binder:
                       zkNodes: localhost
                       brokers: localhost
-      kafka:
-        binder:
-          zkNodes: localhost
-          brokers: localhost
+      # rabbit:
+      #   bindings:
+      #     "iot.event":
+      #       consumer:
+      #         max-concurrency: 5

@@ -25,11 +25,16 @@ public class ExecutionController {
         return  ResponseEntity.ok("OK");
     }
 
-    @Async
-    @Scheduled(fixedRate = 5)
-    public void scheduleFixedDelayTask2() throws InterruptedException {
+    @GetMapping(value = "/send")
+    public @ResponseBody ResponseEntity produceRabbitAPI() {
         iotService.pubMessage(sendNum);
+        return ResponseEntity.ok("OK");
     }
+    // @Async
+    // @Scheduled(fixedRate = 5)
+    // public void scheduleFixedDelayTask2() throws InterruptedException {
+    //     iotService.pubMessage(sendNum);
+    // }
 
     // @Async
     // @Scheduled(fixedRate = 100, initialDelay = 50)

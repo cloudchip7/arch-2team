@@ -1,0 +1,41 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.12.RELEASE'
+    id 'java'
+    id "com.google.cloud.tools.jib" version '3.2.1'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.samsungsds'
+version = '0.0.2'
+sourceCompatibility = '1.8'
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform('org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR12')
+    implementation 'org.springframework.cloud:spring-cloud-stream'
+    implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
+    implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+	
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'   // log4j2
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.10.3'   // log4j2
+
+    compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+}

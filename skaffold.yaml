@@ -10,6 +10,10 @@ build:
       context: rabbitmq-consumer
       jib:
         type: gradle
+    - image: gcr.io/architect-certification-289902/23/rabbitmq-producer
+      context: rabbitmq-producer
+      jib:
+        type: gradle
 
 deploy:
   kubectl:
