@@ -7,12 +7,6 @@ public interface IotEventReceiver {
 
 	String INPUT1 = "input1";
 
-	String INPUT2 = "input2";
-
-
 	@Input(IotEventReceiver.INPUT1)
 	SubscribableChannel input1();
-
-	@Input(IotEventReceiver.INPUT2)
-	SubscribableChannel input2();
 }

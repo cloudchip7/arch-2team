@@ -9,12 +9,13 @@ const targetNamespaceName = 'default';
 const targetDeploymentName = 'custom-auto-scaler';
 const numberOfTargetReplicas = 3;
 
-async function scale(namespace, name, replicas) {
+
+async function scale(namespace, name) {
   // find the particular deployment
   const res = await k8sApi.readNamespacedDeployment(name, namespace);
   let deployment = res.body;
 
-  console.log("replicas number: " + deployment.spec.replicas);
+  console.log("current replicas number: " + deployment.spec.replicas);
   // edit
   deployment.spec.replicas = deployment.spec.replicas + 1;
 
@@ -22,4 +23,4 @@ async function scale(namespace, name, replicas) {
   await k8sApi.replaceNamespacedDeployment(name, namespace, deployment);
 }
 
-scale(targetNamespaceName, targetDeploymentName, numberOfTargetReplicas);
+// scale(targetNamespaceName, targetDeploymentName, numberOfTargetReplicas);

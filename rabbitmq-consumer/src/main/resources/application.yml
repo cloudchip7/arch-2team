@@ -15,7 +15,7 @@ spring:
           content-type: application/json
           # rabbit-event or kafka-event
           binder: rabbit-event
-          # group: iot
+          group: iot
         # input2:
         #   destination: iot.event
         #   content-type: application/json
@@ -30,7 +30,7 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: localhost
+                host: rabbitmq
                 username: guest
                 password: guest
         kafka-event:

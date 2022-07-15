@@ -10,19 +10,9 @@ spring:
         "iot.event":
           destination: iot.event
           content-type: application/json
-           # rabbit-event or kafka-event
-          binder: rabbit-event
-      # rabbit-event or kafka-event    
-      default-binder: rabbit-event
+          binder: kafka-event 
+      default-binder: kafka-event
       binders:
-        rabbit-event:
-          type: rabbit
-          environment:
-            spring:
-              rabbitmq:
-                host: rabbitmq
-                username: guest
-                password: guest
         kafka-event:
           type: kafka
           environment:
